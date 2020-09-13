@@ -58,6 +58,20 @@ void init(struct store* store1, char name[], char adress[], int numberOfItems, c
     }
 }
 
+void display(struct store* store1) {
+    int i;
+    printf("Название магазина: %s\n", store1->name);
+    printf("Адрес: %s\n", store1->adress);
+    printf("Колличество уникальных товаров: %d\n", store1->numberOfItems);
+    for (i = 1; i <= store1->numberOfItems; i++) {
+        printf("\nТовар %d\n", i);
+        printf("Код товара: %s\n", store1->item[i].code);
+        printf("Название товара: %s\n", store1->item[i].name);
+        printf("Цена: %lf\n", store1->item[i].price);
+        printf("Колличество: %d\n", store1->item[i].amount);
+    }
+}
+
 int main()
 {
     
