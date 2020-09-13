@@ -72,6 +72,18 @@ void display(struct store* store1) {
     }
 }
 
+void add(struct store* store1) {
+    printf("Введите название нового товара\n");
+    scanf("%s", store1->item[store1->numberOfItems + 1].name);
+    printf("Введите код нового товара\n");
+    scanf("%s", store1->item[store1->numberOfItems + 1].code);
+    printf("Введите цену нового товара\n");
+    scanf("%lf", &store1->item[store1->numberOfItems + 1].price);
+    printf("Введите колличество нового товара\n");
+    scanf("%d", &store1->item[store1->numberOfItems + 1].amount);
+    store1->numberOfItems++;
+}
+
 int main()
 {
     
