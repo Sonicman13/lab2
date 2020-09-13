@@ -84,6 +84,28 @@ void add(struct store* store1) {
     store1->numberOfItems++;
 }
 
+void priceChange(struct store* store1, char item1[], double price) {
+    int i = 0;
+    while (i < store1->numberOfItems) {
+        if (strcmp(store1->item[i].code, item1) == 0) {
+            store1->item[i].price = price;
+            i = store1->numberOfItems;
+        }
+        i++;
+    }
+}
+
+void amountChange(struct store* store1, char item1[], int amountDifference) {
+    int i = 0;
+    while (i < store1->numberOfItems) {
+        if (strcmp(store1->item[i].code, item1) == 0) {
+            store1->item[i].amount = store1->item[i].amount + amountDifference;
+            i = store1->numberOfItems;
+        }
+        i++;
+    }
+}
+
 int main()
 {
     
