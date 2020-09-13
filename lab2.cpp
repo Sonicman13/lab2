@@ -6,16 +6,18 @@
 #include "conio.h"
 #define N 100
 
+struct item {
+    char code[N];
+    char name[N];
+    double price;
+    int amount;
+};
+
 struct store {
     char name[N];
     char adress[N];
     int numberOfItems;
-    struct item {
-        char code[N];
-        char name[N];
-        double price;
-        int amount;
-    }item;
+    struct item item[N];
 };
 
 
@@ -30,15 +32,29 @@ void read(struct store* store1) {
     f = getche();
     while (f == '1') {
         printf("Введите название товара\n");
-        scanf("%s", store1->item.name);
+        scanf("%s", store1->item[store1->numberOfItems].name);
         printf("Введите код товара\n");
-        scanf("%s", store1->item.code);
+        scanf("%s", store1->item[store1->numberOfItems].code);
         printf("Введите цену\n");
-        scanf("%lf", &store1->item.price);
+        scanf("%lf", &store1->item[store1->numberOfItems].price);
         printf("Введите колличество товара\n");
-        scanf("%d", &store1->item.amount);
+        scanf("%d", &store1->item[store1->numberOfItems].amount);
+        store1->numberOfItems++;
         printf("Добавить еще один товар?(1-да,0-нет)\n");
         f = getche();
+    }
+}
+
+void init(struct store* store1, char name[], char adress[], int numberOfItems, char itemName[][N], char itemCode[][N], double itemPrice[], int itemAmount[]) {
+    int i;
+    strcpy(store1->name, name);
+    strcpy(store1->adress, adress);
+    store1->numberOfItems = numberOfItems;
+    for (i = 0; i < numberOfItems; i++) {
+        strcpy(store1->item[i].name, itemName[i]);
+        strcpy(store1->item[i].code, itemCode[i]);
+        store1->item[i].price = itemPrice[i];
+        store1->item[i].amount = itemAmount[i];
     }
 }
 
