@@ -2,8 +2,16 @@
 //
 
 #include <iostream>
-#include "stdio.h"
 #include "conio.h"
+#include "locale.h"
+#include "math.h"
+#include "stdlib.h"
+#include "string.h"
+#include "stdio.h"
+#include "Windows.h"
+#include "stdio.h"
+#include "time.h"
+#include "iostream"
 #define N 100
 
 struct item {
@@ -58,17 +66,17 @@ void init(struct store* store1, char name[], char adress[], int numberOfItems, c
     }
 }
 
-void display(struct store* store1) {
+void display(struct store store1) {
     int i;
-    printf("Название магазина: %s\n", store1->name);
-    printf("Адрес: %s\n", store1->adress);
-    printf("Колличество уникальных товаров: %d\n", store1->numberOfItems);
-    for (i = 1; i <= store1->numberOfItems; i++) {
+    printf("Название магазина: %s\n", store1.name);
+    printf("Адрес: %s\n", store1.adress);
+    printf("Колличество уникальных товаров: %d\n", store1.numberOfItems);
+    for (i = 1; i <= store1.numberOfItems; i++) {
         printf("\nТовар %d\n", i);
-        printf("Код товара: %s\n", store1->item[i].code);
-        printf("Название товара: %s\n", store1->item[i].name);
-        printf("Цена: %lf\n", store1->item[i].price);
-        printf("Колличество: %d\n", store1->item[i].amount);
+        printf("Код товара: %s\n", store1.item[i].code);
+        printf("Название товара: %s\n", store1.item[i].name);
+        printf("Цена: %lf\n", store1.item[i].price);
+        printf("Колличество: %d\n", store1.item[i].amount);
     }
 }
 
@@ -108,6 +116,49 @@ void amountChange(struct store* store1, char item1[], int amountDifference) {
 
 int main()
 {
-    
+    setlocale(LC_ALL, "RUS");
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    struct store store1, * store2;
+    int amountDifference;
+    double price;
+    char f,s[N],s1[N][N],code[N];
+    printf("Работать с переменной или с указателем?(1-переменная, 0-указатель)\n");
+    f = getche();
+    if (f == '1') {
+        strcpy(s, "-");
+        strcpy(s1[0], "-");
+        init(&store1, s, s, 0, s1, s1, 0, 0);
+        read(&store1);
+        while (f != '5') {
+            printf("Введите номер следующего действия:\n");
+            printf("1 - показать информацию о магазине\n");
+            printf("2 - добавить новый вид товара\n");
+            printf("3 - изменить цену товара\n");
+            printf("4 - изменить колличество товара\n");
+            printf("5 - выйти\n");
+            f = getche();
+            if (f == '1') {
+                display(store1);
+            }
+            else if (f == '2') {
+                add(&store1);
+            }
+            else if (f == '3') {
+                printf("Введите код товара\n");
+                scanf("%s", code);
+                printf("Введите новую цену\n");
+                scanf("%lf", &price);
+                priceChange(&store1, code, price);
+            }
+            else if (f == '4') {
+                printf("Введите код товара\n");
+                scanf("%s", code);
+                printf("Введите на сколько изменилось колличество товара(если увеличилость - положительное число, если уменьшилось - отрицательное)\n");
+                scanf("%d", &amountDifference);
+                amountChange(&store1, code, amountDifference);
+            }
+        }
+    }
 }
 
