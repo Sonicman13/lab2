@@ -123,16 +123,44 @@ int main()
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     struct store store1, *store2;
-    int amountDifference;
-    double price;
-    char f,s[N],s1[N][N],code[N];
+    int amountDifference, numberOfItems, itemAmount[N];
+    double price, itemPrice[N];
+    char f, s[N], s1[N][N], code[N], name[N], adress[N], itemCode[N][N], itemName[N][N];
     printf("Работать с переменной или с указателем?(1-переменная, 0-указатель)\n");
     f = _getche();
     printf("\n");
     if (f == '1') {
         strcpy_s(s, "-");
         strcpy_s(s1[0], "-");
-        read(&store1);
+        printf("Использовать или read чтобы ввести данные(1 -init, 0 - read)\n");
+        f = _getche();
+        if (f == '0') {
+            read(&store1);
+        }
+        else {
+            printf("\nВведите название магазина\n");
+            gets_s(name);
+            printf("Введите адрес магазина\n");
+            gets_s(adress);
+            numberOfItems = 0;;
+            printf("Добавить товар?(1-да,0-нет)\n");
+            f = _getche();
+            while (f == '1') {
+                printf("\nВведите название товара\n");
+                gets_s(itemName[numberOfItems]);
+                printf("Введите код товара\n");
+                gets_s(itemCode[numberOfItems]);
+                printf("Введите цену\n");
+                scanf_s("%lf", &itemPrice[numberOfItems]);
+                printf("Введите колличество товара\n");
+                scanf_s("%d", &itemAmount[numberOfItems]);
+                numberOfItems++;
+                printf("Добавить еще один товар?(1-да,0-нет)\n");
+                f = _getche();
+                getchar();
+            }
+            init(&store1, name, adress, numberOfItems, itemName, itemCode, itemPrice, itemAmount);
+        }
         while (f != '5') {
             printf("\nВведите номер следующего действия:\n");
             printf("1 - показать информацию о магазине\n");
@@ -169,9 +197,37 @@ int main()
         store2 = (struct store*)malloc(sizeof(store));
         strcpy_s(s, "-");
         strcpy_s(s1[0], "-");
-        read(store2);
+        printf("Использовать или read чтобы ввести данные(1 -init, 0 - read)\n");
+        f = _getche();
+        if (f == '0') {
+            read(store2);
+        }
+        else {
+            printf("\nВведите название магазина\n");
+            gets_s(name);
+            printf("Введите адрес магазина\n");
+            gets_s(adress);
+            numberOfItems = 0;;
+            printf("Добавить товар?(1-да,0-нет)\n");
+            f = _getche();
+            while (f == '1') {
+                printf("\nВведите название товара\n");
+                gets_s(itemName[numberOfItems]);
+                printf("Введите код товара\n");
+                gets_s(itemCode[numberOfItems]);
+                printf("Введите цену\n");
+                scanf_s("%lf", &itemPrice[numberOfItems]);
+                printf("Введите колличество товара\n");
+                scanf_s("%d", &itemAmount[numberOfItems]);
+                numberOfItems++;
+                printf("Добавить еще один товар?(1-да,0-нет)\n");
+                f = _getche();
+                getchar();
+            }
+            init(store2, name, adress, numberOfItems, itemName, itemCode, itemPrice, itemAmount);
+        }
         while (f != '5') {
-            printf("Введите номер следующего действия:\n");
+            printf("\nВведите номер следующего действия:\n");
             printf("1 - показать информацию о магазине\n");
             printf("2 - добавить новый вид товара\n");
             printf("3 - изменить цену товара\n");
@@ -185,7 +241,7 @@ int main()
                 add(store2);
             }
             else if (f == '3') {
-                printf("Введите код товара\n");
+                printf("\nВведите код товара\n");
                 gets_s(code);
                 printf("Введите новую цену\n");
                 scanf_s("%lf", &price);
@@ -193,7 +249,7 @@ int main()
                 priceChange(store2, code, price);
             }
             else if (f == '4') {
-                printf("Введите код товара\n");
+                printf("\nВведите код товара\n");
                 gets_s(code);
                 printf("Введите на сколько изменилось колличество товара(если увеличилость - положительное число, если уменьшилось - отрицательное)\n");
                 scanf_s("%d", &amountDifference);
