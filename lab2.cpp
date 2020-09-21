@@ -140,9 +140,9 @@ int main()
     if (f == '1') {
         strcpy_s(s, "-");
         strcpy_s(s1[0], "-");
-        printf("Использовать или read чтобы ввести данные(1 - init, все остальные символы - read)\n");
+        printf("Использовать или read чтобы ввести данные(1 - read, все остальные символы - init)\n");
         f = _getche();
-        if (f == '0') {
+        if (f == '1') {
             read(&store1);
         }
         else {
@@ -173,6 +173,7 @@ int main()
             }
             init(&store1, name, adress, numberOfItems, itemName, itemCode, itemPrice, itemAmount);
         }
+        f = '1';
         while (f != '5') {
             printf("\nВведите номер следующего действия:\n");
             printf("1 - показать информацию о магазине\n");
@@ -211,9 +212,9 @@ int main()
         store2 = (struct store*)malloc(sizeof(store));
         strcpy_s(s, "-");
         strcpy_s(s1[0], "-");
-        printf("Использовать или read чтобы ввести данные(1 - init, все остальные символы - read)\n");
+        printf("Использовать или read чтобы ввести данные(1 - read, все остальные символы - init)\n");
         f = _getche();
-        if (f == '0') {
+        if (f == '1') {
             read(store2);
         }
         else {
@@ -244,6 +245,7 @@ int main()
             }
             init(store2, name, adress, numberOfItems, itemName, itemCode, itemPrice, itemAmount);
         }
+        f = '1';
         while (f != '5') {
             printf("\nВведите номер следующего действия:\n");
             printf("1 - показать информацию о магазине\n");
