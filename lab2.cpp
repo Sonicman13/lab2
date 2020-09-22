@@ -32,7 +32,7 @@ struct store {
 void read(struct store* store1) {
     char f;
     int i;
-    printf("Введите название магазина\n");
+    printf("\nВведите название магазина\n");
     gets_s(store1->name);
     printf("Введите адрес магазина\n");
     gets_s(store1->adress);
