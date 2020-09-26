@@ -29,47 +29,51 @@ struct store {
 };
 
 
-void read(struct store* store1) {
+struct store read() {
+    struct store store1;
     char f;
     int i;
     printf("\nВведите название магазина\n");
-    gets_s(store1->name);
+    gets_s(store1.name);
     printf("Введите адрес магазина\n");
-    gets_s(store1->adress);
-    store1->numberOfItems = i = 0;;
+    gets_s(store1.adress);
+    store1.numberOfItems = i = 0;;
     printf("Добавить товар?(1 - да, все остальные символы - нет)\n");
     f = _getche();
     while (f == '1') {
         printf("\nВведите название товара\n");
-        gets_s(store1->item[store1->numberOfItems].name);
+        gets_s(store1.item[store1.numberOfItems].name);
         printf("Введите код товара\n");
-        gets_s(store1->item[store1->numberOfItems].code);
+        gets_s(store1.item[store1.numberOfItems].code);
         do {
             printf("Введите цену\n");
-            scanf_s("%lf", &store1->item[store1->numberOfItems].price);
-        } while (store1->item[store1->numberOfItems].price < 0);
+            scanf_s("%lf", &store1.item[store1.numberOfItems].price);
+        } while (store1.item[store1.numberOfItems].price < 0);
         do {
             printf("Введите колличество товара\n");
-            scanf_s("%d", &store1->item[store1->numberOfItems].amount);
-        } while (store1->item[store1->numberOfItems].amount < 0);
-        store1->numberOfItems++;
+            scanf_s("%d", &store1.item[store1.numberOfItems].amount);
+        } while (store1.item[store1.numberOfItems].amount < 0);
+        store1.numberOfItems++;
         printf("Добавить еще один товар?(1 - да, все остальные символы -нет)\n");
         f = _getche();
         getchar();
     }
+    return store1;
 }
 
-void init(struct store* store1, char name[], char adress[], int numberOfItems, char itemName[][N], char itemCode[][N], double itemPrice[], int itemAmount[]) {
+struct store init(char name[], char adress[], int numberOfItems, char itemName[][N], char itemCode[][N], double itemPrice[], int itemAmount[]) {
+    struct store store1;
     int i;
-    strcpy_s(store1->name, name);
-    strcpy_s(store1->adress, adress);
-    store1->numberOfItems = numberOfItems;
+    strcpy_s(store1.name, name);
+    strcpy_s(store1.adress, adress);
+    store1.numberOfItems = numberOfItems;
     for (i = 0; i < numberOfItems; i++) {
-        strcpy_s(store1->item[i].name, itemName[i]);
-        strcpy_s(store1->item[i].code, itemCode[i]);
-        store1->item[i].price = itemPrice[i];
-        store1->item[i].amount = itemAmount[i];
+        strcpy_s(store1.item[i].name, itemName[i]);
+        strcpy_s(store1.item[i].code, itemCode[i]);
+        store1.item[i].price = itemPrice[i];
+        store1.item[i].amount = itemAmount[i];
     }
+    return store1;
 }
 
 void display(struct store store1) {
@@ -86,43 +90,46 @@ void display(struct store store1) {
     }
 }
 
-void add(struct store* store1) {
+struct store add(struct store store1) {
     printf("\nВведите название нового товара\n");
-    gets_s(store1->item[store1->numberOfItems].name);
+    gets_s(store1.item[store1.numberOfItems].name);
     printf("Введите код нового товара\n");
-    gets_s(store1->item[store1->numberOfItems].code);
+    gets_s(store1.item[store1.numberOfItems].code);
     do {
         printf("Введите цену нового товара\n");
-        scanf_s("%lf", &store1->item[store1->numberOfItems].price);
-    } while (store1->item[store1->numberOfItems].price < 0);
+        scanf_s("%lf", &store1.item[store1.numberOfItems].price);
+    } while (store1.item[store1.numberOfItems].price < 0);
     do {
         printf("Введите колличество нового товара\n");
-        scanf_s("%d", &store1->item[store1->numberOfItems].amount);
-    } while (store1->item[store1->numberOfItems].amount < 0);
-    store1->numberOfItems++;
+        scanf_s("%d", &store1.item[store1.numberOfItems].amount);
+    } while (store1.item[store1.numberOfItems].amount < 0);
+    store1.numberOfItems++;
     getchar();
+    return store1;
 }
 
-void priceChange(struct store* store1, char item1[], double price) {
+struct store priceChange(struct store store1, char item1[], double price) {
     int i = 0;
-    while (i < store1->numberOfItems) {
-        if (strcmp(store1->item[i].code, item1) == 0) {
-            store1->item[i].price = price;
-            i = store1->numberOfItems;
+    while (i < store1.numberOfItems) {
+        if (strcmp(store1.item[i].code, item1) == 0) {
+            store1.item[i].price = price;
+            i = store1.numberOfItems;
         }
         i++;
     }
+    return store1;
 }
 
-void amountChange(struct store* store1, char item1[], int amountDifference) {
+struct store amountChange(struct store store1, char item1[], int amountDifference) {
     int i = 0;
-    while (i < store1->numberOfItems) {
-        if (strcmp(store1->item[i].code, item1) == 0) {
-            store1->item[i].amount = store1->item[i].amount + amountDifference;
-            i = store1->numberOfItems;
+    while (i < store1.numberOfItems) {
+        if (strcmp(store1.item[i].code, item1) == 0) {
+            store1.item[i].amount = store1.item[i].amount + amountDifference;
+            i = store1.numberOfItems;
         }
         i++;
     }
+    return store1;
 }
 
 int main()
@@ -143,7 +150,7 @@ int main()
         printf("Использовать или read чтобы ввести данные(1 - read, все остальные символы - init)\n");
         f = _getche();
         if (f == '1') {
-            read(&store1);
+            store1=read();
         }
         else {
             printf("\nВведите название магазина\n");
@@ -171,7 +178,7 @@ int main()
                 f = _getche();
                 getchar();
             }
-            init(&store1, name, adress, numberOfItems, itemName, itemCode, itemPrice, itemAmount);
+            store1=init(name, adress, numberOfItems, itemName, itemCode, itemPrice, itemAmount);
         }
         f = '1';
         while (f != '5') {
@@ -186,7 +193,7 @@ int main()
                 display(store1);
             }
             else if (f == '2') {
-                add(&store1);
+                store1=add(store1);
             }
             else if (f == '3') {
                 printf("\nВведите код товара\n");
@@ -196,7 +203,7 @@ int main()
                     scanf_s("%lf", &price);
                 } while (price < 0);
                 getchar();
-                priceChange(&store1, code, price);
+                store1=priceChange(store1, code, price);
             }
             else if (f == '4') {
                 printf("\nВведите код товара\n");
@@ -204,7 +211,7 @@ int main()
                 printf("Введите на сколько изменилось колличество товара(если увеличилость - положительное число, если уменьшилось - отрицательное)\n");
                 scanf_s("%d", &amountDifference);
                 getchar();
-                amountChange(&store1, code, amountDifference);
+                store1=amountChange(store1, code, amountDifference);
             }
         }
     }
@@ -215,7 +222,7 @@ int main()
         printf("Использовать или read чтобы ввести данные(1 - read, все остальные символы - init)\n");
         f = _getche();
         if (f == '1') {
-            read(store2);
+            *store2=read();
         }
         else {
             printf("\nВведите название магазина\n");
@@ -243,7 +250,7 @@ int main()
                 f = _getche();
                 getchar();
             }
-            init(store2, name, adress, numberOfItems, itemName, itemCode, itemPrice, itemAmount);
+            *store2=init(name, adress, numberOfItems, itemName, itemCode, itemPrice, itemAmount);
         }
         f = '1';
         while (f != '5') {
@@ -258,7 +265,7 @@ int main()
                 display(*store2);
             }
             else if (f == '2') {
-                add(store2);
+                *store2=add(*store2);
             }
             else if (f == '3') {
                 printf("\nВведите код товара\n");
@@ -268,7 +275,7 @@ int main()
                     scanf_s("%lf", &price);
                 } while (price < 0);
                 getchar();
-                priceChange(store2, code, price);
+                *store2=priceChange(*store2, code, price);
             }
             else if (f == '4') {
                 printf("\nВведите код товара\n");
@@ -276,7 +283,7 @@ int main()
                 printf("Введите на сколько изменилось колличество товара(если увеличилость - положительное число, если уменьшилось - отрицательное)\n");
                 scanf_s("%d", &amountDifference);
                 getchar();
-                amountChange(store2, code, amountDifference);
+                *store2=amountChange(*store2, code, amountDifference);
             }
         }
         free(store2);
